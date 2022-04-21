@@ -16,7 +16,7 @@ const KUDOS_TO_REAL = [
   { name: 'SUPER', value: 25 },
 ];
 
-const MAX_POINTS = 1000000;
+const MAX_REAL_VALUE = 1000000;
 /* 
   Recebe: um int representando o número de pontos do usuário
   Retorna: um array contendo os kudos. Ex.: ['OK', 'GOOD'] 
@@ -25,32 +25,45 @@ function getKudosForUser(points) {
   //VALIDATION
   if (isNaN(points))
     return; //If is not a number return error
-
-  if (points > MAX_POINTS)
-    points = MAX_POINTS; //Points will never be above 1m 
   //END OF VALIDATION
 
   const desc_kudo_to_points = KUDOS_TO_POINTS.reverse();
   let index = 0;
-  let kudo_array = [];
+  let kudos_array = [];
 
   while (points > 0) {
     if (points >= desc_kudo_to_points[index].value) {
       points -= desc_kudo_to_points[index].value;
-      kudo_array.push(desc_kudo_to_points[index].name);
+      kudos_array.push(desc_kudo_to_points[index].name);
     } else {
       index++;
     }
   }
 
-  return kudo_array.reverse();
+  return kudos_array;
 }
 
 /* 
   Recebe: Recebe um array contendo os nomes dos kudos de um usuário. Ex.: ['OK', 'GOOD']
   Retorna: a mensagem padrão com o valor em reais dos kudos por extenso. Ex.: Parabéns, você ganhou vinte e cinco reais
 */
-function getKudosValueMessageForUser(kudos) { }
+function getKudosValueMessageForUser(kudos) {
+
+  let totals = KUDOS_TO_REAL.reduce((acc, current) => {
+    const kudocount = kudos.filter((x) => x === current.name).length;
+    return acc + (current.value * kudocount);
+  }, 0);
+
+  totals = totals > MAX_REAL_VALUE ? MAX_REAL_VALUE : totals; //Points will never be above 1m 
+
+  //return `Você recebeu ${totals} reais em retorno aos kudos ${kudos.join(', ')} !`;
+  return `Você recebeu ${totals} reais em retorno aos kudos `;
+}
+
+const arraykudo = getKudosForUser(-100);
+console.log(arraykudo);
+const message = getKudosValueMessageForUser(arraykudo);
+console.log(message);
 
 module.exports = {
   getKudosForUser,
