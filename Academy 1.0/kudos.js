@@ -56,16 +56,12 @@ function getKudosValueMessageForUser(kudos) {
     const kudocount = kudos.filter((x) => x === current.name).length;
     return acc + (current.value * kudocount);
   }, 0);
-
-  totals = totals > MAX_REAL_VALUE ? MAX_REAL_VALUE : totals; //Points will never be above 1m 
-  console.log("Total:", totals);
-  return `Você recebeu ${porExtenso(totals,ESTILO_MONETARIO)} reais em retorno aos kudos ${kudos.join(', ')} !`;
+  
+  //Valor será no máximo 1 milhão e para esse caso é preciso acrescentar 'de' (Ex.: um milhão de reais);
+  const literal_value = totals >= MAX_REAL_VALUE ? `${porExtenso(MAX_REAL_VALUE,ESTILO_MONETARIO)} de` : `${porExtenso(totals,ESTILO_MONETARIO)}`; 
+  
+  return `Você recebeu ${literal_value} reais em retorno aos kudos ${kudos.join(', ')} !`;
 }
-
-const arraykudo = getKudosForUser(1125);  
-console.log(arraykudo);
-const message = getKudosValueMessageForUser(arraykudo);
-console.log(message);
 
 module.exports = {
   getKudosForUser,
