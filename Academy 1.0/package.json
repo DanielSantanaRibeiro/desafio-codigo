@@ -11,5 +11,8 @@
   "scripts": {
     "test": "jest",
     "start": "node kudos.js"
+  },
+  "dependencies": {
+    "numero-por-extenso": "^1.0.8"
   }
 }
