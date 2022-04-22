@@ -29,17 +29,14 @@ function getKudosForUser(points) {
   if (isNaN(points))
     return; //If is not a number return error
   //END OF VALIDATION
-
-  const desc_kudo_to_points = KUDOS_TO_POINTS.reverse();
-  let index = 0;
-  let kudos_array = [];
   
-  while (points > 0) {
-    if (points >= desc_kudo_to_points[index].value) {
-      points -= desc_kudo_to_points[index].value;
-      kudos_array.push(desc_kudo_to_points[index].name);
+  let kudos_array = [];
+  for(let index = KUDOS_TO_POINTS.length-1; points > 0 && index >= 0;){  
+    if (points >= KUDOS_TO_POINTS[index].value) {
+      points -= KUDOS_TO_POINTS[index].value;
+      kudos_array.push(KUDOS_TO_POINTS[index].name);
     } else {
-      index++;
+      index--;
     }
   }
 
