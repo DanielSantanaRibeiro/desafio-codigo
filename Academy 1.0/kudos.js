@@ -1,3 +1,5 @@
+const {porExtenso, "estilo.monetario": ESTILO_MONETARIO} = require('numero-por-extenso');
+
 // Conversão de kudos para pontos
 const KUDOS_TO_POINTS = [
   { name: 'OK', value: 5 },
@@ -17,6 +19,7 @@ const KUDOS_TO_REAL = [
 ];
 
 const MAX_REAL_VALUE = 1000000;
+
 /* 
   Recebe: um int representando o número de pontos do usuário
   Retorna: um array contendo os kudos. Ex.: ['OK', 'GOOD'] 
@@ -30,7 +33,7 @@ function getKudosForUser(points) {
   const desc_kudo_to_points = KUDOS_TO_POINTS.reverse();
   let index = 0;
   let kudos_array = [];
-
+  
   while (points > 0) {
     if (points >= desc_kudo_to_points[index].value) {
       points -= desc_kudo_to_points[index].value;
@@ -55,12 +58,11 @@ function getKudosValueMessageForUser(kudos) {
   }, 0);
 
   totals = totals > MAX_REAL_VALUE ? MAX_REAL_VALUE : totals; //Points will never be above 1m 
-
-  //return `Você recebeu ${totals} reais em retorno aos kudos ${kudos.join(', ')} !`;
-  return `Você recebeu ${totals} reais em retorno aos kudos `;
+  console.log("Total:", totals);
+  return `Você recebeu ${porExtenso(totals,ESTILO_MONETARIO)} reais em retorno aos kudos ${kudos.join(', ')} !`;
 }
 
-const arraykudo = getKudosForUser(-100);
+const arraykudo = getKudosForUser(1125);  
 console.log(arraykudo);
 const message = getKudosValueMessageForUser(arraykudo);
 console.log(message);
