@@ -27,7 +27,10 @@ const MAX_REAL_VALUE = 1000000;
 function getKudosForUser(points) {
   //VALIDATION
   if (isNaN(points))
-    return; //If is not a number return error
+    throw TypeError("Invalid Argument! Argument is not a number!"); //If is not a number throw error
+  
+  if(!Number.isInteger(points))
+    throw TypeError("Invalid Argument! Argument must be an Integer number!"); //If is not a number return error
   //END OF VALIDATION
   
   let kudos_array = [];
@@ -57,7 +60,7 @@ function getKudosValueMessageForUser(kudos) {
   //Valor será no máximo 1 milhão e para esse caso é preciso acrescentar 'de' (Ex.: um milhão de reais);
   const literal_value = totals >= MAX_REAL_VALUE ? `${porExtenso(MAX_REAL_VALUE,ESTILO_MONETARIO)} de` : `${porExtenso(totals,ESTILO_MONETARIO)}`; 
   
-  return `Você recebeu ${literal_value} reais em retorno aos kudos ${kudos.join(', ')} !`;
+  return `Você recebeu ${literal_value} reais em retorno aos kudos ${kudos.join(', ')}!`;
 }
 
 module.exports = {
