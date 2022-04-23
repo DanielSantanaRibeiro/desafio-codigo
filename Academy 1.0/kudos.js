@@ -51,6 +51,9 @@ function getKudosForUser(points) {
   Retorna: a mensagem padrão com o valor em reais dos kudos por extenso. Ex.: Parabéns, você ganhou vinte e cinco reais
 */
 function getKudosValueMessageForUser(kudos) {
+  if(!Array.isArray(kudos)){
+    throw new TypeError('Invalid Argument: Argument must be an array of kudos');
+  }
 
   let totals = KUDOS_TO_REAL.reduce((acc, current) => {
     const kudocount = kudos.filter((x) => x === current.name).length;
